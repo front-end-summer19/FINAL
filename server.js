@@ -26,9 +26,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(express.static('public'));
 
-// const dataBaseURL =
-//   'mongodb+srv://daniel:dd2345@recipes-3k4ea.mongodb.net/test?retryWrites=true&w=majority';
-
 const dataBaseURL = process.env.DATABASE;
 
 // app.get('/', function(req, res) {
@@ -45,15 +42,6 @@ app.get('/api/killall', recipeControllers.killall);
 app.post('/api/upload', recipeControllers.upload);
 
 const PORT = process.env.PORT || 5000;
-
-// process.on('SIGINT', shutdown);
-
-// function shutdown() {
-//   console.log('graceful shutdown express');
-//   server.close(function() {
-//     console.log('closed express');
-//   });
-// }
 
 // Serve static files in prod
 if (process.env.NODE_ENV === 'production') {

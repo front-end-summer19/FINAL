@@ -51,6 +51,28 @@ class App extends React.Component {
     this.setState({ recipes: recipes });
   }
 
+  updateRecipe = (recipeId, updatedRecipe) => {
+    console.log(updatedRecipe);
+    const options = {
+      method: 'PUT',
+      body: updatedRecipe,
+    };
+    fetch(`http://localhost:5000/api/recipes/${recipeId}`, options).then(
+      response => console.log(response),
+    );
+    const recipes = [...this.state.recipes];
+    const updatedRecipes = recipes.map(recipe => {
+      if (recipes._id === recipeId) {
+        recipe = updatedRecipe;
+      }
+      return recipe;
+    });
+    this.setState(prevState => {
+      return { recipes: updatedRecipes };
+    });
+    console.log(updatedRecipes);
+  };
+
   render() {
     if (this.state.isLoading) {
       return 'Loading...';
@@ -70,8 +92,13 @@ class App extends React.Component {
             recipes={this.state.recipes}
             handleDelete={this.handleDelete}
           />
-          <EditRecipe path="/editrecipe/:recipeId" />
+          <EditRecipe
+            path="/editrecipe/:recipeId"
+            updateRecipe={this.updateRecipe}
+            recipes={this.state.recipes}
+          />
         </Router>
+        {JSON.stringify(this.state.recipes, null, 2)}
       </div>
     );
   }

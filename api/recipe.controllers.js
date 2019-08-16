@@ -24,11 +24,11 @@ exports.add = function(req, res) {
 };
 
 exports.update = (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   const id = req.params.id;
   Recipe.findByIdAndUpdate(id, req.body, { new: true }, (err, response) => {
     if (err) return console.log(err);
-    res.send(response);
+    res.send(response.body);
   });
 };
 

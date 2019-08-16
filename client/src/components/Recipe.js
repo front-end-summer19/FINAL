@@ -6,7 +6,7 @@ export class Recipe extends React.Component {
     const { _id, title, description, image } = this.props.recipe;
     return (
       <div>
-        <img src={`img/${image}`} alt={title} />
+        <img src={`/img/${image}`} alt={title} />
 
         <Link to={`/recipe/${_id}`}>
           <h3>{title}</h3>

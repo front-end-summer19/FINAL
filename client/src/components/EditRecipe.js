@@ -3,8 +3,10 @@ import React from 'react';
 class EditRecipe extends React.Component {
   state = {
     recipe: [],
-    isLoading: false,
     title: '',
+    description: '',
+    image: '',
+    isLoading: false,
   };
 
   componentDidMount() {
@@ -14,30 +16,35 @@ class EditRecipe extends React.Component {
       .then(recipe =>
         this.setState({
           recipe: recipe,
+          title: recipe.title,
+          image: recipe.image,
+          description: recipe.description,
           isLoading: false,
         }),
       );
   }
 
-  handleChange = event => {
+  handleSubmit = e => {
+    e.preventDefault();
+    let updatedRecipe = new FormData();
+
+    updatedRecipe.append('title', this.state.title);
+    updatedRecipe.append('description', this.state.description);
+    updatedRecipe.append('image', this.state.image);
+
+    this.props.updateRecipe(this.props.recipeId, updatedRecipe);
+  };
+
+  handleTitleChange = event => {
     this.setState({ title: event.target.value });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    console.log(this.state.title);
-    const updatedRecipe = {
-      title: this.state.title,
-    };
-    const options = {
-      method: 'PUT',
-      body: JSON.stringify(updatedRecipe),
-      headers: { 'Content-Type': 'application/json' },
-    };
-    fetch(
-      `http://localhost:5000/api/recipes/${this.props.recipeId}`,
-      options,
-    ).then(response => console.log(response));
+  handleDescriptionChange = event => {
+    this.setState({ description: event.target.value });
+  };
+
+  handleImageChange = event => {
+    this.setState({ image: event.target.value });
   };
 
   render() {
@@ -50,8 +57,24 @@ class EditRecipe extends React.Component {
           placeholder="New recipe title"
           name="title"
           value={this.state.title}
-          onChange={this.handleChange}
+          onChange={this.handleTitleChange}
         />
+        <textarea
+          type="text"
+          placeholder="description"
+          name="description"
+          value={this.state.description}
+          onChange={this.handleDescriptionChange}
+        />
+        <input type="file" accept=".jpg, .png" />
+        <input
+          type="text"
+          placeholder="image"
+          name="image"
+          value={this.state.image}
+          onChange={this.handleImageChange}
+        />
+
         <button>Submit</button>
       </form>
     );
