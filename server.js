@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 
-const path = require(path);
+const path = require('path');
 
 const recipeModel = require('./api/recipe.model');
 const recipeControllers = require('./api/recipe.controllers');
