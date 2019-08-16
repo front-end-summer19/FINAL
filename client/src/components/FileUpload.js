@@ -43,7 +43,7 @@ class FileUpload extends React.Component {
         <button>Upload</button>
         <div>
           {this.state.imageURL && (
-            <img src={this.state.imageURL} alt="upload preview" />
+            <img src={`img/${this.state.imageURL}`} alt="upload preview" />
           )}
         </div>
       </form>

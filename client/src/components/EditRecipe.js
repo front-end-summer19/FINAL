@@ -44,10 +44,10 @@ class EditRecipe extends React.Component {
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
         <h3>EDIT RECIPE</h3>
-        {this.state.recipe.title}
+        <p>Current title: {this.state.recipe.title}</p>
         <input
           type="text"
-          placeholder="recipe title"
+          placeholder="New recipe title"
           name="title"
           value={this.state.title}
           onChange={this.handleChange}

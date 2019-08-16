@@ -52,11 +52,11 @@ exports.upload = (req, res) => {
     return res.status(400).send('No files were uploaded.');
   }
   let file = req.files.file;
-  file.mv(`./public/img/${req.body.filename}`, err => {
+  file.mv(`./client/public/img/${req.body.filename}`, err => {
     if (err) {
       return res.status(500).send(err);
     }
-    res.json({ file: `/img/${req.body.filename}` });
+    res.json({ file: `${req.body.filename}` });
   });
 };
 

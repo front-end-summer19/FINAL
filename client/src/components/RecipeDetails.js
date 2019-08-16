@@ -25,7 +25,7 @@ class RecipeDetails extends React.Component {
 
     return (
       <div>
-        <img src={`http://localhost:5000/img/${image}`} alt={title} />
+        <img src={`img/${image}`} alt={title} />
         <h3>
           <Link to={`/recipe/${_id}`}>{title}</Link>
         </h3>
