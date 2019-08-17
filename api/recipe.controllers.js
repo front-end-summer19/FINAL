@@ -23,12 +23,13 @@ exports.add = function(req, res) {
   });
 };
 
+// HERE
 exports.update = (req, res) => {
   console.log(req.body);
   const id = req.params.id;
   Recipe.findByIdAndUpdate(id, req.body, { new: true }, (err, response) => {
     if (err) return console.log(err);
-    res.send(response.body);
+    return res.json({ recipe: response.body });
   });
 };
 
@@ -71,8 +72,8 @@ exports.import = function(req, res) {
       preparation: [
         { step: 'Boil water' },
         { step: 'Fry the eggs' },
-        { step: 'Serve hot' },
-      ],
+        { step: 'Serve hot' }
+      ]
     },
     {
       title: 'Pho-Chicken Noodle Soup',
@@ -83,8 +84,8 @@ exports.import = function(req, res) {
       preparation: [
         { step: 'Boil water' },
         { step: 'Fry the eggs' },
-        { step: 'Serve hot' },
-      ],
+        { step: 'Serve hot' }
+      ]
     },
     {
       title: 'Guacamole',
@@ -95,8 +96,8 @@ exports.import = function(req, res) {
       preparation: [
         { step: 'Boil water' },
         { step: 'Fry the eggs' },
-        { step: 'Serve hot' },
-      ],
+        { step: 'Serve hot' }
+      ]
     },
     {
       title: 'Hamburger',
@@ -107,12 +108,12 @@ exports.import = function(req, res) {
       preparation: [
         { step: 'Boil water' },
         { step: 'Fry the eggs' },
-        { step: 'Serve hot' },
-      ],
+        { step: 'Serve hot' }
+      ]
     },
     function(err) {
       if (err) return console.log(err);
       return res.sendStatus(202);
-    },
+    }
   );
 };

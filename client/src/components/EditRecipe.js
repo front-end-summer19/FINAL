@@ -6,7 +6,7 @@ class EditRecipe extends React.Component {
     title: '',
     description: '',
     image: '',
-    isLoading: false,
+    isLoading: false
   };
 
   componentDidMount() {
@@ -16,21 +16,26 @@ class EditRecipe extends React.Component {
       .then(recipe =>
         this.setState({
           recipe: recipe,
+          // indexed: recipe.index,
           title: recipe.title,
           image: recipe.image,
           description: recipe.description,
-          isLoading: false,
-        }),
+          isLoading: false
+        })
       );
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    let updatedRecipe = new FormData();
-
-    updatedRecipe.append('title', this.state.title);
-    updatedRecipe.append('description', this.state.description);
-    updatedRecipe.append('image', this.state.image);
+    // let updatedRecipe = new FormData();
+    // updatedRecipe.append('title', this.state.title);
+    // updatedRecipe.append('description', this.state.description);
+    // updatedRecipe.append('image', this.state.image);
+    const updatedRecipe = {
+      title: this.state.title,
+      description: this.state.description,
+      image: this.state.image
+    };
 
     this.props.updateRecipe(this.props.recipeId, updatedRecipe);
   };
@@ -53,24 +58,24 @@ class EditRecipe extends React.Component {
         <h3>EDIT RECIPE</h3>
         <p>Current title: {this.state.recipe.title}</p>
         <input
-          type="text"
-          placeholder="New recipe title"
-          name="title"
+          type='text'
+          placeholder='New recipe title'
+          name='title'
           value={this.state.title}
           onChange={this.handleTitleChange}
         />
         <textarea
-          type="text"
-          placeholder="description"
-          name="description"
+          type='text'
+          placeholder='description'
+          name='description'
           value={this.state.description}
           onChange={this.handleDescriptionChange}
         />
-        <input type="file" accept=".jpg, .png" />
+        <input type='file' accept='.jpg, .png' />
         <input
-          type="text"
-          placeholder="image"
-          name="image"
+          type='text'
+          placeholder='image'
+          name='image'
           value={this.state.image}
           onChange={this.handleImageChange}
         />
