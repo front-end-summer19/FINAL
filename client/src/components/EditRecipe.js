@@ -1,36 +1,29 @@
 import React from 'react';
+// import Recipe from './Recipe';
 
 class EditRecipe extends React.Component {
-  state = {
-    recipe: [],
-    title: '',
-    description: '',
-    image: '',
-    isLoading: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      recipe: null,
+      title: '',
+      description: '',
+      image: '',
+      isLoading: false
+    };
+  }
 
-  componentDidMount() {
-    this.setState({ isLoading: true });
-    fetch(`http://localhost:5000/api/recipes/${this.props.recipeId}`)
-      .then(response => response.json())
-      .then(recipe =>
-        this.setState({
-          recipe: recipe,
-          // indexed: recipe.index,
-          title: recipe.title,
-          image: recipe.image,
-          description: recipe.description,
-          isLoading: false
-        })
-      );
+  componentDidMount(props) {
+    const currRecipe = this.props.recipes.filter(
+      recipe => recipe._id === this.props.recipeId
+    );
+
+    console.log(currRecipe[0]);
+    this.setState({ recipe: currRecipe[0] });
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    // let updatedRecipe = new FormData();
-    // updatedRecipe.append('title', this.state.title);
-    // updatedRecipe.append('description', this.state.description);
-    // updatedRecipe.append('image', this.state.image);
     const updatedRecipe = {
       title: this.state.title,
       description: this.state.description,
@@ -54,34 +47,48 @@ class EditRecipe extends React.Component {
 
   render() {
     return (
-      <form onSubmit={e => this.handleSubmit(e)}>
-        <h3>EDIT RECIPE</h3>
-        <p>Current title: {this.state.recipe.title}</p>
-        <input
-          type='text'
-          placeholder='New recipe title'
-          name='title'
-          value={this.state.title}
-          onChange={this.handleTitleChange}
-        />
-        <textarea
-          type='text'
-          placeholder='description'
-          name='description'
-          value={this.state.description}
-          onChange={this.handleDescriptionChange}
-        />
-        <input type='file' accept='.jpg, .png' />
-        <input
-          type='text'
-          placeholder='image'
-          name='image'
-          value={this.state.image}
-          onChange={this.handleImageChange}
-        />
+      <div>
+        <h3>Current Recipe</h3>
+        {/* <h4>{this.state.recipe}</h4> */}
+        {/* <Recipe key={this.state.recipe._id} recipe={this.state.recipe} /> */}
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <h3>EDIT CURRENT RECIPE</h3>
+          {/* <p>Current title: {this.state.recipe.title}</p> */}
+          <input
+            type='text'
+            placeholder='New recipe title'
+            name='title'
+            value={this.state.title}
+            onChange={this.handleTitleChange}
+          />
+          <input
+            type='text'
+            placeholder='Recipe image'
+            name='image'
+            value={this.state.image}
+            onChange={this.handleImageChange}
+          />
+          <textarea
+            type='text'
+            placeholder='description'
+            name='description'
+            value={this.state.description}
+            onChange={this.handleDescriptionChange}
+          />
+          <input type='file' accept='.jpg, .png' />
+          <input
+            type='text'
+            placeholder='image'
+            name='image'
+            value={this.state.image}
+            onChange={this.handleImageChange}
+          />
 
-        <button>Submit</button>
-      </form>
+          <button>Submit</button>
+          <h4>Props:</h4>
+          {/* {JSON.stringify(this.props.recipes, null, 2)} */}
+        </form>
+      </div>
     );
   }
 }

@@ -14,13 +14,19 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    this.setState({ isLoading: true });
     fetch(`http://localhost:5000/api/recipes`)
       .then(response => response.json())
       .then(recipes =>
         this.setState({
-          recipes
+          recipes,
+          isLoading: false
         })
       );
+  }
+
+  getRecipes() {
+    return null;
   }
 
   addRecipe = recipe => {
@@ -50,7 +56,6 @@ class App extends React.Component {
 
   // HERE
   updateRecipe = (recipeId, updatedRecipe) => {
-    console.log(recipeId);
     const options = {
       method: 'PUT',
       headers: {
@@ -64,15 +69,11 @@ class App extends React.Component {
     const recipes = [...this.state.recipes];
     console.log(recipes);
     // this is the problem line
-    const thisRecipeId =
-      // pos = myArray.map(function(e) { return e.hello; }).indexOf('stevie');
-      recipes
-        .map(recipe => {
-          return recipe._id;
-        })
-        .indexOf(recipeId);
+    const thisRecipe = recipes.indexOf(
+      recipes.filter(recipe => recipe._id === recipeId)
+    );
 
-    console.log(thisRecipeId);
+    console.log(thisRecipe);
     // recipes._id = recipeId = updatedRecipe;
     // console.log(recipes[recipeId]);
     // this.setState({ recipes });
@@ -115,7 +116,7 @@ class App extends React.Component {
             recipes={this.state.recipes}
           />
         </Router>
-        {JSON.stringify(this.state.recipes, null, 2)}
+        <pre>{JSON.stringify(this.state.recipes, null, 2)}</pre>
       </div>
     );
   }
